@@ -225,7 +225,7 @@ function pebbleAppMessageHandler(e) {
 }
 
 function pebleConfigurationHandler() {
-    var url = '';
+    var url = 'https://cdn.rawgit.com/sionyx/pebble_zway_time/fe1119b84cfd5437099257d476cdc899cc113f67/config/index.html';
     Pebble.openURL(url);
 }
 
