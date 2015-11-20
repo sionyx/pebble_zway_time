@@ -1,0 +1,109 @@
+{
+    "appKeys": {
+        "KEY_STATUS": 0,
+        "KEY_LOCATIONS_START": 1,
+        "KEY_LOCATIONS_END": 2,
+        "KEY_DEVICES_START": 3,
+        "KEY_DEVICES_END": 4,
+        "KEY_LOCATION_ID": 100,
+        "KEY_LOCATION_TITLE": 101,
+        "KEY_DEVICE_ICON": 205,
+        "KEY_DEVICE_TYPE": 200,
+        "KEY_DEVICE_ID": 201,
+        "KEY_DEVICE_LOCATION": 202,
+        "KEY_DEVICE_LEVEL": 203,
+        "KEY_DEVICE_TITLE": 204
+    },
+    "capabilities": [
+                     "configurable"
+                     ],
+    "companyName": "sionyx.ru+pebble@gmail.com",
+    "longName": "ZWay Time",
+    "projectType": "native",
+    "resources": {
+        "media": [
+                  {
+                  "file": "images/motion_yes.png",
+                  "name": "MOTION_YES",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/luminosity.png",
+                  "name": "LUMINOSITY",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/unknown.png",
+                  "name": "UNKNOWN",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/battery.png",
+                  "name": "BATTERY",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/temperature.png",
+                  "name": "TEMPERATURE",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/humidity.png",
+                  "name": "HUMIDITY",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/bulb-on.png",
+                  "name": "BULB_ON",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/bulb-off.png",
+                  "name": "BULB_OFF",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  },
+                  {
+                  "file": "images/error.png",
+                  "name": "ERROR",
+                  "targetPlatforms": [
+                                      "basalt"
+                                      ],
+                  "type": "png"
+                  }
+                  ]
+    },
+    "sdkVersion": "3",
+    "shortName": "ZWay Time",
+    "targetPlatforms": [
+                        "basalt"
+                        ],
+    "uuid": "3c9effa5-33b7-493e-ba89-1aade7fdb6cc",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
