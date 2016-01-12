@@ -71,14 +71,14 @@ function zWayDevices() {
             Pebble.sendAppMessage({ 'KEY_DEVICES_START' : json.data.devices.length});
             
             json.data.devices.forEach(function logArrayElements(device, index, devices) {
-                                      if (!device.location) {
-                                      return;
+                                      if (!device.location || device.permanently_hidden || !device.visibility) {
+                                          return;
                                       }
                                       
                                       var dictionary = {
                                       "KEY_DEVICE_TYPE"    : device.deviceType,
                                       "KEY_DEVICE_ID"      : device.id,
-                                      "KEY_DEVICE_LOCATION": device.location,
+                                      "KEY_DEVICE_LOCATION": Number(device.location),
                                       "KEY_DEVICE_LEVEL"   : device.metrics.level.toString() + (device.metrics.scaleTitle ? device.metrics.scaleTitle : ""),
                                       "KEY_DEVICE_TITLE"   : device.metrics.title,
                                       "KEY_DEVICE_ICON"    : ICONS[device.metrics.icon] || ICONS.UNKNOWN

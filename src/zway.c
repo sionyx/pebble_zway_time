@@ -1,13 +1,13 @@
 #include <pebble.h>
 #include "zway.h"
 
-#define MAX_LOCATIONS 8
-#define MAX_DEVICES 32
+#define MAX_LOCATIONS 12
+#define MAX_DEVICES 48
 
 static ZWayLocation s_locations[MAX_LOCATIONS];
 static uint8_t s_locations_num = 0;
 
-static ZWayDevice s_devices[8];
+static ZWayDevice s_devices[MAX_DEVICES];
 static uint8_t s_devices_num = 0;
 
 void zway_locations_reset(uint8_t new_locations_count) {
@@ -30,7 +30,7 @@ void zway_location_add(uint8_t id, char *title) {
 }
 
 void zway_device_add(char *type, char *id, char *level, char *title, device_icon icon, uint8_t location) {
-    if(s_devices_num == MAX_DEVICES) {
+    if(s_devices_num == MAX_DEVICES - 1) {
         return;
     }
     
@@ -73,17 +73,15 @@ ZWayLocation *zway_location(uint8_t location) {
 ZWayDevice *zway_device(uint8_t location, uint8_t device) {
     if (s_devices_num == 0 || s_locations_num == 0) return NULL;
 
-    uint16_t index = 0;
     uint8_t location_id = s_locations[location].id;
     for (uint16_t i = 0, num = 0; i < s_devices_num; i++) {
         if (s_devices[i].location == location_id) {
             if (num == device) {
-                index = i;
-                break;
+                return &s_devices[i];
             }
             num++;
         }
     }
     
-    return &s_devices[index];
+    return NULL;
 }
