@@ -1,2 +1,5 @@
 /build/
 .DS_Store
+/.idea/
+rebuild.sh
+*.lock-waf_darwin_build
