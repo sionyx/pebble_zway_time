@@ -97,12 +97,12 @@
                   ]
     },
     "sdkVersion": "3",
-    "shortName": "ZWay Time",
+    "shortName": "ZWave Time",
     "targetPlatforms": [
                         "basalt"
                         ],
     "uuid": "3c9effa5-33b7-493e-ba89-1aade7fdb6cc",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": false
     }
