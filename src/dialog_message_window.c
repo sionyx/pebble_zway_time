@@ -24,7 +24,7 @@ static void anim_stopped_handler(Animation *animation, bool finished, void *cont
 }
 
 static void background_update_proc(Layer *layer, GContext *ctx) {
-    graphics_context_set_fill_color(ctx, GColorRed);
+    graphics_context_set_fill_color(ctx, PBL_IF_COLOR_ELSE(GColorRed, GColorBlack));
     graphics_fill_rect(ctx, layer_get_bounds(layer), 0, 0);
 }
 
@@ -88,7 +88,15 @@ static void window_appear(Window *window) {
     finish = GRect(10, 10 + bitmap_bounds.size.h + 5, 124, 168 - (10 + bitmap_bounds.size.h + 10));
     Animation *label_anim = (Animation*)property_animation_create_layer_frame(label_layer, &start, &finish);
     
+#ifdef PBL_PLATFORM_APLITE
+    animation_set_delay(icon_anim, 700);
+    animation_schedule(icon_anim);
+    animation_set_delay(label_anim, 700);
+    animation_schedule(label_anim);
+    s_appear_anim = background_anim;
+#else
     s_appear_anim = animation_spawn_create(background_anim, icon_anim, label_anim, NULL);
+#endif
     animation_set_handlers(s_appear_anim, (AnimationHandlers) {
         .stopped = anim_stopped_handler
     }, NULL);

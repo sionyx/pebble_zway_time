@@ -14,9 +14,18 @@
 #include "protocol.h"
 
 Window *devices_window;
-StatusBarLayer *bar_layer;
 MenuLayer *menu_layer;
 TextLayer *status_layer;
+
+#ifdef PBL_PLATFORM_BASALT
+StatusBarLayer *bar_layer;
+#define MENU_HEIHGT 168
+#endif
+
+#ifdef PBL_PLATFORM_APLITE
+#define STATUS_BAR_LAYER_HEIGHT 0
+#define MENU_HEIHGT 152
+#endif
 
 
 
@@ -113,12 +122,16 @@ void update_devices_list() {
     menu_layer_reload_data(menu_layer);
 }
 
-void window_load(Window *window) {
+void create_status_bar(Window *window) {
+#ifdef PBL_PLATFORM_BASALT
     bar_layer = status_bar_layer_create();
     status_bar_layer_set_colors(bar_layer, GColorCobaltBlue, GColorWhite);
-    
-    menu_layer = menu_layer_create(GRect(0, STATUS_BAR_LAYER_HEIGHT, 144, 168));
-    
+    layer_add_child(window_get_root_layer(window), status_bar_layer_get_layer(bar_layer));
+#endif
+}
+
+void create_menu(Window *window) {
+    menu_layer = menu_layer_create(GRect(0, STATUS_BAR_LAYER_HEIGHT, 144, MENU_HEIHGT));
     menu_layer_set_click_config_onto_window(menu_layer, window);
     
     MenuLayerCallbacks callbacks = {
@@ -132,19 +145,26 @@ void window_load(Window *window) {
     };
     menu_layer_set_callbacks(menu_layer, NULL, callbacks);
     
+#ifdef PBL_COLOR
     menu_layer_set_normal_colors(menu_layer, GColorWhite, GColorDukeBlue);
     menu_layer_set_highlight_colors(menu_layer, GColorVividCerulean, GColorWhite);
+#endif
     
-    //Add to Window
-    layer_add_child(window_get_root_layer(window), status_bar_layer_get_layer(bar_layer));
     layer_add_child(window_get_root_layer(window), menu_layer_get_layer(menu_layer));
+}
+
+void window_load(Window *window) {
+    create_status_bar(window);
+    create_menu(window);
 }
 
 void window_unload(Window *window) {
     hide_message();
     
     menu_layer_destroy(menu_layer);
+#ifdef PBL_PLATFORM_BASALT
     status_bar_layer_destroy(bar_layer);
+#endif
     
     window_destroy(window);
 }
