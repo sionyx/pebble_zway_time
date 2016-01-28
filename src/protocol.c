@@ -8,7 +8,7 @@
 
 #include "protocol.h"
 #include <pebble.h>
-#include "zway.h"
+#include "home_model.h"
 #include "devices_window.h"
 #include "dialog_message_window.h"
 
@@ -25,9 +25,10 @@ enum {
     KEY_DEVICE_TYPE = 200,
     KEY_DEVICE_ID = 201,
     KEY_DEVICE_LOCATION = 202,
-    KEY_DEVICE_LEVEL = 203,
-    KEY_DEVICE_TITLE = 204,
-    KEY_DEVICE_ICON = 205
+    KEY_DEVICE_TITLE = 203,
+    KEY_DEVICE_ICON = 204,
+    KEY_DEVICE_LEVEL = 205,
+    KEY_DEVICE_LEVEL_EXACT = 206
 };
 
 enum {
@@ -48,7 +49,7 @@ void inbox_received_callback(DictionaryIterator *iterator, void *context) {
     Tuple *id_tuple = dict_find(iterator, KEY_LOCATION_ID);
     Tuple *title_tuple = dict_find(iterator, KEY_LOCATION_TITLE);
     if (id_tuple && title_tuple) {
-        zway_location_add(id_tuple->value->uint8, title_tuple->value->cstring);
+        home_location_add(id_tuple->value->uint8, title_tuple->value->cstring);
         return;
     }
 
@@ -60,7 +61,7 @@ void inbox_received_callback(DictionaryIterator *iterator, void *context) {
     Tuple *dev_title_tuple = dict_find(iterator, KEY_DEVICE_TITLE);
     Tuple *dev_icon_tuple = dict_find(iterator, KEY_DEVICE_ICON);
     if (dev_type_tuple && dev_id_tuple && dev_location_tuple && dev_level_tuple && dev_title_tuple && dev_icon_tuple) {
-        zway_device_add(dev_type_tuple->value->cstring,
+        home_device_add(dev_type_tuple->value->cstring,
                         dev_id_tuple->value->cstring,
                         dev_level_tuple->value->cstring,
                         dev_title_tuple->value->cstring,
@@ -98,14 +99,14 @@ void inbox_received_callback(DictionaryIterator *iterator, void *context) {
                 }
                 break;
             case KEY_LOCATIONS_START:
-                zway_locations_reset(t->value->uint8);
+                home_locations_reset(t->value->uint8);
                 break;
             case KEY_LOCATIONS_END:
                 break;
             case KEY_DEVICES_START:
-                zway_devices_reset(t->value->uint8);
                 break;
             case KEY_DEVICES_END:
+                home_locations_remove_empty();
                 update_devices_list();
                 hide_message();
                 break;
@@ -130,12 +131,12 @@ static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResul
 static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 }
 
-void send_device_command(char *device_id, char *command) {
+void send_device_level(char *device_id, char *level, bool exact) {
     DictionaryIterator *iter;
     app_message_outbox_begin(&iter);
     
     dict_write_cstring(iter, KEY_DEVICE_ID, device_id);
-    dict_write_cstring(iter, KEY_DEVICE_LEVEL, command);
+    dict_write_cstring(iter, (exact) ? KEY_DEVICE_LEVEL_EXACT : KEY_DEVICE_LEVEL, level);
     
     app_message_outbox_send();
 }

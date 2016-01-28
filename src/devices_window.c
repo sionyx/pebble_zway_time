@@ -9,8 +9,7 @@
 #include <pebble.h>
 #include "devices_window.h"
 #include "resources.h"
-#include "zway.h"
-#include "zway_operations.h"
+#include "home_model.h"
 #include "protocol.h"
 
 Window *devices_window;
@@ -50,7 +49,7 @@ void hide_message() {
 
 
 uint16_t num_sections_callback(struct MenuLayer *menu_layer, void *callback_context) {
-    return zway_locations_num();
+    return home_locations_num();
 }
 
 int16_t header_height(struct MenuLayer *menu_layer, uint16_t section_index, void *callback_context) {
@@ -58,12 +57,14 @@ int16_t header_height(struct MenuLayer *menu_layer, uint16_t section_index, void
 }
 
 void draw_header_callback(GContext *ctx, const Layer *cell_layer, uint16_t section_index, void *callback_context) {
-    ZWayLocation *location = zway_location(section_index);
-    menu_cell_basic_header_draw(ctx, cell_layer, location->title);
+    zway_location_ptr location = home_location_at_index(section_index);
+    char *title = (location) ? location->title : "";
+    
+    menu_cell_basic_header_draw(ctx, cell_layer, title);
 }
 
 void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, void *callback_context) {
-    ZWayDevice *device = zway_device(cell_index->section, cell_index->row);
+    zway_device_ptr device = home_device_at_location(cell_index->section, cell_index->row);
     if (!device) {
         return;
     }
@@ -90,6 +91,12 @@ void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, 
         case ICON_LUMINOSITY:
             icon = get_image(IMAGE_LUMINOSITY);
             break;
+        case ICON_SWITCH_MULTI:
+            icon = get_image(IMAGE_SWITCH_MULTI);
+            break;
+        case ICON_SCENE:
+            icon = get_image(IMAGE_SCENE);
+            break;
         default:
             icon = get_image(IMAGE_UNKNOWN);
             break;
@@ -98,19 +105,13 @@ void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_index, 
 }
 
 uint16_t num_rows_callback(MenuLayer *menu_layer, uint16_t section_index, void *callback_context) {
-    return zway_devices_num(section_index);
+    return home_devices_num_at_location_index(section_index);
 }
 
 void select_click_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *callback_context) {
-    vibes_short_pulse();
-    
-    ZWayDevice *device = zway_device(cell_index->section, cell_index->row);
-    if (!device) {
-        return;
-    }
-    
-    if (strcmp(device->type, "switchBinary") == 0) {
-        zway_switchBinary_toggle(device);
+    bool activated = home_activate_device_at_location(cell_index->section, cell_index->row);
+    if (activated) {
+        vibes_short_pulse();
     }
 }
 

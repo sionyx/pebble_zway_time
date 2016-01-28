@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "resources.h"
 
-#define RESOURCE_COUNT 8
+#define RESOURCE_COUNT 10
 
 static int resource_ids[RESOURCE_COUNT] = {
     RESOURCE_ID_UNKNOWN,
@@ -11,7 +11,9 @@ static int resource_ids[RESOURCE_COUNT] = {
     RESOURCE_ID_TEMPERATURE,
     RESOURCE_ID_BATTERY,
     RESOURCE_ID_MOTION_YES,
-    RESOURCE_ID_LUMINOSITY
+    RESOURCE_ID_LUMINOSITY,
+    RESOURCE_ID_BULB_MULTI,
+    RESOURCE_ID_SCENE
 };
 static GBitmap *images[RESOURCE_COUNT];
 

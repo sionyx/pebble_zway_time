@@ -19,6 +19,15 @@ var ICONS = {
     'luminosity'  : 6
 };
 
+var TYPES = {
+    'switchBinary'     : 1,
+    'switchRGBW'       : 1,
+    'battery'          : 4,
+    'sensorMultilevel' : 6,
+    'switchMultilevel' : 7,
+    'toggleButton'     : 8
+}
+
 var URL = {
     LOGIN     : '',
     LOCATIONS : '',
@@ -62,29 +71,70 @@ function postRequest(url, payload, success, fail) {
     xhr.send(payload);
 };
 
+function filterDevices(devices) {
+    filter = localStorage.getItem("device_type");
+    var filtered = [];
+    if (filter == 'scenes') {
+        devices.forEach(function logArrayElements(device, index, devices) {
+                        if (device.deviceType == 'toggleButton') {
+                        filtered.push(device);
+                        }
+                        });
+    }
+    else if (filter == 'switches') {
+        devices.forEach(function logArrayElements(device, index, devices) {
+                        if (device.deviceType == 'switchBinary' ||
+                            device.deviceType == 'switchMultilevel' ||
+                            device.deviceType == 'toggleButton' ||
+                            device.deviceType == 'switchRGBW') {
+                            filtered.push(device);
+                        }
+                        });
+    }
+    else if (filter == 'tagged') {
+        devices.forEach(function logArrayElements(device, index, devices) {
+                        if (device.tags && device.tags.indexOf('pebble') >= 0) {
+                            filtered.push(device);
+                        }
+                        });
+    }
+    else filtered = devices;
+    
+    return filtered;
+}
+
 function zWayDevices() {
     Pebble.sendAppMessage({ 'KEY_STATUS' : STATUS.LOADDEVICES });
     
     function succesHandler(responseText) {
         var json = JSON.parse(responseText);
         if (json.code == 200) {
-            Pebble.sendAppMessage({ 'KEY_DEVICES_START' : json.data.devices.length});
+            var devices = filterDevices(json.data.devices);
             
-            json.data.devices.forEach(function logArrayElements(device, index, devices) {
-                                      if (!device.location || device.permanently_hidden || !device.visibility) {
-                                          return;
-                                      }
-                                      
-                                      var dictionary = {
-                                      "KEY_DEVICE_TYPE"    : device.deviceType,
-                                      "KEY_DEVICE_ID"      : device.id,
-                                      "KEY_DEVICE_LOCATION": Number(device.location),
-                                      "KEY_DEVICE_LEVEL"   : device.metrics.level.toString() + (device.metrics.scaleTitle ? device.metrics.scaleTitle : ""),
-                                      "KEY_DEVICE_TITLE"   : device.metrics.title,
-                                      "KEY_DEVICE_ICON"    : ICONS[device.metrics.icon] || ICONS.UNKNOWN
-                                      };
-                                      Pebble.sendAppMessage(dictionary);
-                                      });
+            Pebble.sendAppMessage({ 'KEY_DEVICES_START' : devices.length});
+            devices.forEach(function logArrayElements(device, index, devices) {
+                            if (!device.location || device.permanently_hidden || !device.visibility) {
+                                return;
+                            }
+                            
+                            var level = '';
+                            if (device.metrics.level) {
+                                level = device.metrics.level.toString();
+                                if (device.metrics.scaleTitle) {
+                                    level += device.metrics.scaleTitle
+                                }
+                            }
+                            
+                            var dictionary = {
+                            "KEY_DEVICE_TYPE"    : device.deviceType,
+                            "KEY_DEVICE_ID"      : device.id,
+                            "KEY_DEVICE_LOCATION": Number(device.location),
+                            "KEY_DEVICE_LEVEL"   : level,
+                            "KEY_DEVICE_TITLE"   : device.metrics.title,
+                            "KEY_DEVICE_ICON"    : ICONS[device.metrics.icon] || TYPES[device.deviceType] || ICONS.UNKNOWN
+                            };
+                            Pebble.sendAppMessage(dictionary);
+                            });
             
             Pebble.sendAppMessage({ 'KEY_DEVICES_END' : 0});
         }
@@ -102,7 +152,6 @@ function zWayLocations() {
     
     function succesHandler(responseText) {
         var json = JSON.parse(responseText);
-        
         if (json.code == 200) {
             Pebble.sendAppMessage({ 'KEY_LOCATIONS_START' : json.data.length});
             
@@ -175,8 +224,8 @@ function zWayLogin() {
     postRequest(URL.LOGIN, payload, succesHandler, failHandler);
 }
 
-function zWayCommand(deviceId, command) {
-    var url = URL.COMMAND + deviceId + '/command/' + command;
+function zWayCommand(deviceId, command, exact) {
+    var url = URL.COMMAND + deviceId + (exact ? '/command/exact?level=' : '/command/') + command;
     function succesHandler(responseText) {
         var json = JSON.parse(responseText);
         if (json.code != 200) {
@@ -221,7 +270,7 @@ function pebbleReadyHandler(e) {
 }
 
 function pebbleAppMessageHandler(e) {
-    zWayCommand(e.payload.KEY_DEVICE_ID, e.payload.KEY_DEVICE_LEVEL);
+    zWayCommand(e.payload.KEY_DEVICE_ID, e.payload.KEY_DEVICE_LEVEL || e.payload.KEY_DEVICE_LEVEL_EXACT, !!e.payload.KEY_DEVICE_LEVEL_EXACT);
 }
 
 function pebleConfigurationHandler() {
@@ -236,6 +285,7 @@ function pebbleWebviewClosedHandler(e) {
     localStorage.setItem("zway_port",    config_data['port_input']);
     localStorage.setItem("zway_login",   config_data['login_input']);
     localStorage.setItem("zway_pass",    config_data['pass_input']);
+    localStorage.setItem("device_type",  config_data['device_type']);
     
     init();
 }

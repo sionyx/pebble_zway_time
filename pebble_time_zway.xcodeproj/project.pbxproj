@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B84F7A78DC14F398A14919F /* zway.c in Sources */ = {isa = PBXBuildFile; fileRef = DE2B395B8BC34D2F997166E2 /* zway.c */; };
+		2B84F7A78DC14F398A14919F /* zway_location.c in Sources */ = {isa = PBXBuildFile; fileRef = DE2B395B8BC34D2F997166E2 /* zway_location.c */; };
 		7720C6821BF3EA4200C81C72 /* devices_window.c in Sources */ = {isa = PBXBuildFile; fileRef = 7720C6801BF3EA4200C81C72 /* devices_window.c */; };
 		7720C6881BF3F4D900C81C72 /* protocol.c in Sources */ = {isa = PBXBuildFile; fileRef = 7720C6861BF3F4D900C81C72 /* protocol.c */; };
+		773CC9921C580AF30074F60F /* home_model.c in Sources */ = {isa = PBXBuildFile; fileRef = 773CC9901C580AF30074F60F /* home_model.c */; };
+		774FC3521C575CA700351133 /* zway_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 774FC3501C575CA700351133 /* zway_device.c */; };
+		774FC3551C5764AE00351133 /* str.c in Sources */ = {isa = PBXBuildFile; fileRef = 774FC3531C5764AE00351133 /* str.c */; };
 		77E2C7611BF518FA00D3D76C /* dialog_message_window.c in Sources */ = {isa = PBXBuildFile; fileRef = 77E2C75F1BF518FA00D3D76C /* dialog_message_window.c */; };
 		77F709031BFD0B5C00A8D97F /* zway_operations.c in Sources */ = {isa = PBXBuildFile; fileRef = 77F709011BFD0B5C00A8D97F /* zway_operations.c */; };
 		A9EF4DA8A9954376BF601807 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73CEB065166F41FD8B2645C6 /* Foundation.framework */; };
@@ -25,17 +28,25 @@
 		7720C6811BF3EA4200C81C72 /* devices_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = devices_window.h; sourceTree = "<group>"; };
 		7720C6861BF3F4D900C81C72 /* protocol.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = protocol.c; sourceTree = "<group>"; };
 		7720C6871BF3F4D900C81C72 /* protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.h; sourceTree = "<group>"; };
+		773CC9901C580AF30074F60F /* home_model.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = home_model.c; sourceTree = "<group>"; };
+		773CC9911C580AF30074F60F /* home_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = home_model.h; sourceTree = "<group>"; };
+		774FC34F1C56A82200351133 /* utarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utarray.h; sourceTree = "<group>"; };
+		774FC3501C575CA700351133 /* zway_device.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zway_device.c; sourceTree = "<group>"; };
+		774FC3511C575CA700351133 /* zway_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zway_device.h; sourceTree = "<group>"; };
+		774FC3531C5764AE00351133 /* str.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = str.c; sourceTree = "<group>"; };
+		774FC3541C5764AE00351133 /* str.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = str.h; sourceTree = "<group>"; };
+		775BF2C31C4819F2009D6174 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = config/index.html; sourceTree = SOURCE_ROOT; };
 		77E2C75F1BF518FA00D3D76C /* dialog_message_window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dialog_message_window.c; sourceTree = "<group>"; };
 		77E2C7601BF518FA00D3D76C /* dialog_message_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dialog_message_window.h; sourceTree = "<group>"; };
 		77E2C9111BFA66C400D3D76C /* pebble-js-app.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "pebble-js-app.js"; path = "js/pebble-js-app.js"; sourceTree = "<group>"; };
 		77F709011BFD0B5C00A8D97F /* zway_operations.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zway_operations.c; sourceTree = "<group>"; };
 		77F709021BFD0B5C00A8D97F /* zway_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zway_operations.h; sourceTree = "<group>"; };
 		86514854627044D1B8217369 /* fake-iOS-target.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fake-iOS-target.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		934195FAFC024C7F92CF701D /* zway.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = zway.h; sourceTree = "<group>"; };
+		934195FAFC024C7F92CF701D /* zway_location.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = zway_location.h; sourceTree = "<group>"; };
 		B9E731135DE44276A3725A32 /* resources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = resources.h; sourceTree = "<group>"; };
 		C45D3575E33247748E3227CA /* main.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		D629771B957E4C78BA3A4705 /* appinfo.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = appinfo.json; sourceTree = "<group>"; };
-		DE2B395B8BC34D2F997166E2 /* zway.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = zway.c; sourceTree = "<group>"; };
+		DE2B395B8BC34D2F997166E2 /* zway_location.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = zway_location.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +64,9 @@
 		66C0592B8C3846879A468939 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				773CC98F1C580AB60074F60F /* models */,
+				77FC5DA81C4E8CA8000D52B7 /* routines */,
+				775BF2C21C4819C6009D6174 /* config */,
 				77E2C9101BFA66A900D3D76C /* js */,
 				7720C6891BF3F88A00C81C72 /* zway */,
 				7720C6851BF3F4C400C81C72 /* protocol */,
@@ -104,12 +118,31 @@
 		7720C6891BF3F88A00C81C72 /* zway */ = {
 			isa = PBXGroup;
 			children = (
-				DE2B395B8BC34D2F997166E2 /* zway.c */,
-				934195FAFC024C7F92CF701D /* zway.h */,
+				DE2B395B8BC34D2F997166E2 /* zway_location.c */,
+				934195FAFC024C7F92CF701D /* zway_location.h */,
 				77F709011BFD0B5C00A8D97F /* zway_operations.c */,
 				77F709021BFD0B5C00A8D97F /* zway_operations.h */,
+				774FC3501C575CA700351133 /* zway_device.c */,
+				774FC3511C575CA700351133 /* zway_device.h */,
 			);
 			name = zway;
+			sourceTree = "<group>";
+		};
+		773CC98F1C580AB60074F60F /* models */ = {
+			isa = PBXGroup;
+			children = (
+				773CC9901C580AF30074F60F /* home_model.c */,
+				773CC9911C580AF30074F60F /* home_model.h */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		775BF2C21C4819C6009D6174 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				775BF2C31C4819F2009D6174 /* index.html */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 		77E2C9101BFA66A900D3D76C /* js */ = {
@@ -118,6 +151,16 @@
 				77E2C9111BFA66C400D3D76C /* pebble-js-app.js */,
 			);
 			name = js;
+			sourceTree = "<group>";
+		};
+		77FC5DA81C4E8CA8000D52B7 /* routines */ = {
+			isa = PBXGroup;
+			children = (
+				774FC34F1C56A82200351133 /* utarray.h */,
+				774FC3531C5764AE00351133 /* str.c */,
+				774FC3541C5764AE00351133 /* str.h */,
+			);
+			name = routines;
 			sourceTree = "<group>";
 		};
 		C4CA01FF10464CC7A7F23BB1 = {
@@ -197,11 +240,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				774FC3521C575CA700351133 /* zway_device.c in Sources */,
 				FC0017D0E06D4DEF8C58D5F0 /* main.c in Sources */,
+				773CC9921C580AF30074F60F /* home_model.c in Sources */,
 				77E2C7611BF518FA00D3D76C /* dialog_message_window.c in Sources */,
 				E482A4D375D7425DACEA0323 /* resources.c in Sources */,
 				7720C6881BF3F4D900C81C72 /* protocol.c in Sources */,
-				2B84F7A78DC14F398A14919F /* zway.c in Sources */,
+				2B84F7A78DC14F398A14919F /* zway_location.c in Sources */,
+				774FC3551C5764AE00351133 /* str.c in Sources */,
 				77F709031BFD0B5C00A8D97F /* zway_operations.c in Sources */,
 				7720C6821BF3EA4200C81C72 /* devices_window.c in Sources */,
 			);

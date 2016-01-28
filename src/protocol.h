@@ -7,6 +7,7 @@
 //
 
 #pragma once
+#include <pebble.h>
 
 void protocol_init();
-void send_device_command(char *device_id, char *command);
+void send_device_level(char *device_id, char *level, bool exact);

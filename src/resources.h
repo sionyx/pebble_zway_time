@@ -9,6 +9,8 @@ enum image_resource {
     IMAGE_BATTERY = 5,
     IMAGE_MOTION = 6,
     IMAGE_LUMINOSITY = 7,
+    IMAGE_SWITCH_MULTI = 8,
+    IMAGE_SCENE = 9
 };
 
 GBitmap *get_image(enum image_resource resource);
